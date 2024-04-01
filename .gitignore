@@ -1,0 +1,3 @@
+gateway/tb-gw/*
+emqx/data/*
+emqx/log/*

@@ -1,0 +1,22 @@
+{
+  "fqn": "ateste",
+  "name": "Ateste",
+  "deprecated": false,
+  "image": null,
+  "description": null,
+  "descriptor": {
+    "type": "static",
+    "sizeX": 7.5,
+    "sizeY": 3,
+    "resources": [],
+    "templateHtml": "<li>\n    <ul *ngFor=\"let user of data\">{{user.name}}</ul>\n</li>\n",
+    "templateCss": "",
+    "controllerScript": "self.onInit = function() {\n    \n    const $injector = self.ctx.$scope.$injector;\n    const deviceService = $injector.get(self.ctx.servicesMap.get('deviceService'));\n        \n//'http://localhost:8080/api/plugins/telemetry/DEVICE/00ba9a90-ec42-11ee-8cf2-131ca58248f9/values/attributes/SHARED_SCOPE' \\\n    const pageLink = self.ctx.pageLink(10, 0); // use swagger docs on pagelinks\n    \n    \n    const deviceId = '8719d460-e94b-11ee-bb6e-4b8f317c2937'; \n    \n    deviceService.getDevice(deviceId).subscribe(\n      (resp) => {\n          self.ctx.$scope.data = resp \n          console.log(\"AAA\",resp)\n        // resp.data.forEach((sensor)=>{\n        //       console.log('Tenant Device Infos:', sensor);\n        //   })\n        \n      }\n    );\n    \n    const attributeService = $injector.get(self.ctx.servicesMap.get('attributeService'));\n    \n    const entityId={\n    \"id\": \"00ba9a90-ec42-11ee-8cf2-131ca58248f9\",\n    \"entityType\": \"DEVICE\"\n    }\n\n\n        const attributeScope = 'SHARED_SCOPE'; // SERVER_SHARED / XXX_SHARED - use Swagger docs on that\n        attributeService.getEntityAttributes(entityId, attributeScope).subscribe(\n          (data) => {\n            console.log('Entity Attributes:', data);\n          }\n        );\n    \n\n}\n\n\nself.onDestroy = function() {}\n\nself.onDataUpdated = function() {\n    self.ctx.detectChanges();\n}",
+    "settingsSchema": "",
+    "dataKeySettingsSchema": "",
+    "settingsDirective": "tb-html-card-widget-settings",
+    "dataKeySettingsDirective": "tags",
+    "defaultConfig": "{\"datasources\":[{\"type\":\"static\",\"name\":\"function\",\"dataKeys\":[{\"name\":\"f(x)\",\"type\":\"function\",\"label\":\"Random\",\"color\":\"#2196f3\",\"settings\":{},\"_hash\":0.15479322438769105,\"funcBody\":\"var value = prevValue + Math.random() * 100 - 50;\\nvar multiplier = Math.pow(10, 2 || 0);\\nvar value = Math.round(value * multiplier) / multiplier;\\nif (value < -1000) {\\n\\tvalue = -1000;\\n} else if (value > 1000) {\\n\\tvalue = 1000;\\n}\\nreturn value;\"}]}],\"timewindow\":{\"realtime\":{\"timewindowMs\":60000}},\"showTitle\":false,\"backgroundColor\":\"rgb(255, 255, 255)\",\"color\":\"rgba(0, 0, 0, 0.87)\",\"padding\":\"8px\",\"settings\":{\"cardHtml\":\"<div class='card'>HTML code here</div>\",\"cardCss\":\".card {\\n    font-weight: bold;\\n    font-size: 32px;\\n    color: #999;\\n    width: 100%;\\n    height: 100%;\\n    display: flex;\\n    align-items: center;\\n    justify-content: center;\\n}\"},\"title\":\"HTML Card\",\"dropShadow\":true}"
+  },
+  "tags": null
+}
